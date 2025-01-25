@@ -1,43 +1,37 @@
-// Select elements
-const taskInput = document.getElementById("taskInput");
-const addTaskBtn = document.getElementById("addTaskBtn");
-const taskList = document.getElementById("taskList");
+function postMessage() {
+    const postText = document.getElementById("post-text").value;
+    
+    if (postText.trim() !== "") {
+        const feed = document.querySelector(".feed");
+        const newPost = document.createElement("div");
+        newPost.classList.add("post");
 
-// Add Task Event
-addTaskBtn.addEventListener("click", addTask);
+        const postHeader = document.createElement("div");
+        postHeader.classList.add("post-header");
 
-// Function to Add Task
-function addTask() {
-  const taskText = taskInput.value.trim();
+        const profilePic = document.createElement("img");
+        profilePic.src = "profile-pic.jpg"; // Replace with your profile pic URL
+        profilePic.alt = "Profile Pic";
 
-  if (taskText === "") {
-    alert("Please enter a task!");
-    return;
-  }
+        const userName = document.createElement("h3");
+        userName.textContent = "John Doe"; // Replace with dynamic user name
 
-  // Create task item
-  const taskItem = document.createElement("li");
-  taskItem.className = "task-item";
-  taskItem.innerHTML = `
-    <span>${taskText}</span>
-    <div>
-      <button class="complete-btn">✔</button>
-      <button class="delete-btn">✖</button>
-    </div>
-  `;
+        const postTime = document.createElement("span");
+        postTime.textContent = "Just now";
 
-  // Append to task list
-  taskList.appendChild(taskItem);
+        postHeader.appendChild(profilePic);
+        postHeader.appendChild(userName);
+        postHeader.appendChild(postTime);
 
-  // Clear input
-  taskInput.value = "";
+        const postContent = document.createElement("p");
+        postContent.textContent = postText;
 
-  // Add event listeners to buttons
-  taskItem.querySelector(".complete-btn").addEventListener("click", () => {
-    taskItem.classList.toggle("completed");
-  });
+        newPost.appendChild(postHeader);
+        newPost.appendChild(postContent);
 
-  taskItem.querySelector(".delete-btn").addEventListener("click", () => {
-    taskItem.remove();
-  });
+        feed.prepend(newPost);
+        document.getElementById("post-text").value = ""; // Clear the text area
+    } else {
+        alert("Please write something to post!");
+    }
 }
